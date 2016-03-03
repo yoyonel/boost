@@ -1,2 +1,0 @@
-/usr/bin/ar cq liblogger_thread_safe.a  CMakeFiles/logger_thread_safe.dir/Logging.cpp.o
-/usr/bin/ranlib liblogger_thread_safe.a

@@ -1,2 +1,0 @@
-/home/latty/Prog/boost/threads/waitfree_producer_consumer/build/CMakeFiles/app.dir
-/home/latty/Prog/boost/threads/waitfree_producer_consumer/build/CMakeFiles/logger_thread_safe.dir
