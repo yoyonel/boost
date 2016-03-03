@@ -11,6 +11,8 @@
 
 // Sources, URLs:
 // - http://www.boost.org/doc/libs/1_54_0/doc/html/lockfree/examples.html#lockfree.examples.waitfree_single_producer_single_consumer_queue
+// - http://www.gnu.org/software/libc/manual/html_node/Sigaction-Function-Example.html
+// - http://www.boost.org/doc/libs/1_54_0/doc/html/boost/lockfree/spsc_queue.html
 
 
 //typedef int Image;
@@ -115,7 +117,7 @@ termination_handler (int signum)
 void setup_interruption_handling()
 {
     struct sigaction new_action, old_action;
-    
+
     /* Set up the structure to specify the new action. */
     new_action.sa_handler = termination_handler;
     sigemptyset (&new_action.sa_mask);
