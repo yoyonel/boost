@@ -1,0 +1,2 @@
+/home/latty/Prog/boost/stereopolis_logger/build/CMakeFiles/MMI.dir
+/home/latty/Prog/boost/stereopolis_logger/build/libLogger/CMakeFiles/LibLogger.dir

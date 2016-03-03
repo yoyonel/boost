@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/latty/Prog/boost/stereopolis_logger/src/MMI.cpp
+iostream
+-
+libLogger/include/Logging.h
+/home/latty/Prog/boost/stereopolis_logger/src/libLogger/include/Logging.h
+

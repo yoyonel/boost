@@ -1,0 +1,2 @@
+/home/latty/Prog/boost/logger_thread_safe/build/CMakeFiles/app.dir
+/home/latty/Prog/boost/logger_thread_safe/build/CMakeFiles/logger_thread_safe.dir

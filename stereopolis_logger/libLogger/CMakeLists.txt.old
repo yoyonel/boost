@@ -1,0 +1,26 @@
+#sources files
+set(LibLoggerSRCS
+	include/Logging.h
+	src/Logging.cpp
+	)
+
+#ajout definitions
+add_definitions("-D_WIN32_WINNT=0x0601")
+
+include_directories(
+	${Boost_INCLUDE_DIRS}
+	)
+
+	ADD_DEFINITIONS(-DUNICODE)
+	
+link_directories(
+	${BOOST_LIBRARYDIR}
+	)
+	
+add_library(LibLogger ${LibLoggerSRCS})
+
+target_link_libraries( LibLogger
+  ${Boost_LIBRARIES}
+  )
+ 
+SET_PROPERTY(TARGET LibLogger PROPERTY FOLDER "StereopolisLib")

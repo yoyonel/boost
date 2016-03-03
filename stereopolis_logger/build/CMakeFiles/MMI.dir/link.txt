@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/MMI.dir/src/MMI.cpp.o  -o MMI -rdynamic libLogger/libLibLogger.a -lpthread /usr/local/lib/libboost_log.so /usr/local/lib/libboost_log_setup.so /usr/local/lib/libboost_system.so /usr/local/lib/libboost_thread.so -lpthread -lpthread -Wl,-rpath,/usr/local/lib 
