@@ -1,23 +1,8 @@
 #include "Logging.h"
 
-#include <boost/atomic.hpp>
-<<<<<<< HEAD
-#include <boost/lockfree/spsc_queue.hpp>
 #include <boost/thread/thread.hpp>
-#include <cstdlib>
-#include <iostream>
-
-typedef int Image;
-
-// Sources, URLs:
-// -
-// http://www.boost.org/doc/libs/1_54_0/doc/html/lockfree/examples.html#lockfree.examples.waitfree_single_producer_single_consumer_queue
-
-// Note: ce n'est pas ce que souhaite faire Julien !
-// Dans ce pattern, le consommateur (ou l'action de consommer) bloque la
-// production
-
-=======
+#include <boost/lockfree/spsc_queue.hpp>
+#include <boost/atomic.hpp>
 
 #include <iostream>
 #include <cstdlib>
@@ -32,7 +17,6 @@ typedef int Image;
 // PARAMETRES pour le test
 // Scénario (normalement) représentant les temps d'acquisition/écriture dans le
 // Kangoo
->>>>>>> 019798e9ce24abd60defc42b8eb918325376dc2b
 uint time_transfert_usb3 = 250;
 uint time_transfert_disk = 100;
 // Scénario avec des temps d'acquisition inversés pour provoquer des overflows
@@ -59,18 +43,6 @@ struct Image {
   // char* ptr_img;
 };
 
-<<<<<<< HEAD
-struct Capture {
-  // Capture une image LB
-  void take() {
-    // 50 ms pour prendre une image
-    boost::this_thread::sleep(boost::posix_time::milliseconds(76));
-    //
-    img = std::rand();
-  }
-
-  const Image& get() const { return img; }
-=======
 std::ostream &operator<<(std::ostream &os, const Image &obj) {
   // write obj to stream
   os << obj.m_id;
@@ -92,22 +64,10 @@ struct Capture {
   const Image &get() const { return img; }
 
   friend std::ostream &operator<<(std::ostream &os, const Capture &obj);
->>>>>>> 019798e9ce24abd60defc42b8eb918325376dc2b
 
   Image img;
 };
 
-<<<<<<< HEAD
-struct WrapperLadyBug {
-  WrapperLadyBug() { INFO << "Constructeur"; }
-
-  const Capture& read() {
-    cur_capture.take();
-    return cur_capture;
-  }
-
-  Capture cur_capture;
-=======
 std::ostream &operator<<(std::ostream &os, const Capture &obj) {
   // write obj to stream
   os << obj.img;
@@ -135,7 +95,6 @@ struct WrapperLadyBug {
   // car on ne capture qu'une capture à la fois
   // (=> pas de tampon mémoire coté LadyBug)
   Capture m_capture;
->>>>>>> 019798e9ce24abd60defc42b8eb918325376dc2b
 };
 // typedef pour simplifier l'écriture
 typedef boost::shared_ptr<WrapperLadyBug> WrapperLadyBugPtr;
@@ -149,46 +108,15 @@ boost::lockfree::spsc_queue<Capture, boost::lockfree::capacity<capacity_queue>>
 void runLadyBug(WrapperLadyBugPtr sptr_wLB) {
   // Production infinie ...
   while (true) {
-<<<<<<< HEAD
-    WrapperLadyBug& ref_wLB = *sptr_wLB;
-    const Capture& value = ref_wLB.read();
-    const Image& img = value.get();
-    while (!spsc_queue.push(img))
-      ;
-    INFO << "[PRODUCER] Transfert USB->RAM Image n° " << img;
-=======
     WrapperLadyBug &ref_wLB = *sptr_wLB;
     const Capture &capture = ref_wLB.read();
     while (!spsc_queue_captures.push(capture))
       ;
     INFO << "\t->[PRODUCER] Transfert (USB->)RAM->RAM' Image n° " << capture;
->>>>>>> 019798e9ce24abd60defc42b8eb918325376dc2b
   }
 }
 
 boost::atomic<bool> done(false);
-<<<<<<< HEAD
-
-// CONSUMER
-void runwriteLadyBug(WrapperLadyBugPtr sptr_wLB) {
-  while (true) {
-    Image value;
-
-    // while (!done) {
-    //     while (spsc_queue.pop(value)) {
-    //         // temps pour écrire
-    //         boost::this_thread::sleep(boost::posix_time::milliseconds(75));
-    //         //
-    //         INFO << "[CONSUMER] Transfert RAM->DISK Image n° " << value;
-    //     }
-    // }
-    while (spsc_queue.pop(value)) {
-      // temps pour écrire
-      boost::this_thread::sleep(boost::posix_time::milliseconds(75));
-      INFO << "[CONSUMER] Transfert RAM->DISK Image n° " << value;
-    }
-  }
-=======
 
 // Function d'écriture de l'image
 // RAM -> DISK
@@ -234,35 +162,12 @@ void setup_interruption_handling() {
   if (old_action.sa_handler != SIG_IGN) sigaction(SIGHUP, &new_action, NULL);
   sigaction(SIGTERM, NULL, &old_action);
   if (old_action.sa_handler != SIG_IGN) sigaction(SIGTERM, &new_action, NULL);
->>>>>>> 019798e9ce24abd60defc42b8eb918325376dc2b
 }
 
 // INSTANCIATIONS
 // Wrapper LadyBug
-WrapperLadyBug* m_Wrapper = new WrapperLadyBug();
+WrapperLadyBug *m_Wrapper = new WrapperLadyBug();
 
-<<<<<<< HEAD
-int main(int argc, char* argv[]) {
-  using namespace std;
-
-  srand(std::time(0));
-
-  cout << "boost::lockfree::queue is ";
-  if (!spsc_queue.is_lock_free()) cout << "not ";
-  cout << "lockfree" << endl;
-
-  boost::thread recordThreadLadyBug(runLadyBug, WrapperLadyBugPtr(m_Wrapper));
-  boost::thread writeThreadLadyBug(runwriteLadyBug,
-                                   WrapperLadyBugPtr(m_Wrapper));
-
-  recordThreadLadyBug.detach();
-  done = true;
-  writeThreadLadyBug.detach();
-
-  while (true) {
-  }
-}
-=======
 int main(int argc, char *argv[]) {
   using namespace std;
 
@@ -286,4 +191,3 @@ int main(int argc, char *argv[]) {
   while (true) {
     }
 }   
->>>>>>> 019798e9ce24abd60defc42b8eb918325376dc2b
