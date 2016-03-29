@@ -1,12 +1,12 @@
 #include "Logging.h"
 
-#include <boost/thread/thread.hpp>
-#include <boost/lockfree/spsc_queue.hpp>
 #include <boost/atomic.hpp>
+#include <boost/lockfree/spsc_queue.hpp>
+#include <boost/thread/thread.hpp>
 
-#include <iostream>
-#include <cstdlib>
 #include <signal.h>
+#include <cstdlib>
+#include <iostream>
 
 // Sources, URLs:
 // http://www.boost.org/doc/libs/1_54_0/doc/html/lockfree/examples.html#lockfree.examples.waitfree_single_producer_single_consumer_queue
@@ -103,7 +103,7 @@ typedef boost::shared_ptr<WrapperLadyBug> WrapperLadyBugPtr;
 const uint capacity_queue = 5;
 boost::lockfree::spsc_queue<Capture, boost::lockfree::capacity<capacity_queue>>
     spsc_queue_captures;
-    
+
 // PRODUCER
 void runLadyBug(WrapperLadyBugPtr sptr_wLB) {
   // Production infinie ...
@@ -189,5 +189,5 @@ int main(int argc, char *argv[]) {
 
   // boucle infinie d'exécution
   while (true) {
-    }
+  }
 }
