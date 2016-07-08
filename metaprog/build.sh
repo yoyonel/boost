@@ -5,5 +5,5 @@
 
 cd build
 make boost_template_variadic.s
-subl CMakeFiles/boost_variadic.dir/boost_template_variadic.cpp.s
+editor CMakeFiles/boost_variadic.dir/boost_template_variadic.cpp.s
 cd -
