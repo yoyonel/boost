@@ -52,10 +52,8 @@ struct WebServer_CURL
 
 };
 
-#define PP_WEBSERVER_IMP(_connection_type) WebServer_ ## _connection_type
-
 template< WebServerConnectionType >
-struct VLP16_WebServer_Template : public PP_WEBSERVER_IMP(WebServerConnectionType) {
+struct VLP16_WebServer_Template {
 };
 
 
