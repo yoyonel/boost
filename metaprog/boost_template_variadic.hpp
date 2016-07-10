@@ -1,6 +1,7 @@
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/preprocessor/seq.hpp>
 #include <boost/preprocessor/variadic/to_seq.hpp>
+#include <boost/tti/member_type.hpp>
 
 #define CALL_MACRO(_,__,SEQ) Macro(Foo<BOOST_PP_SEQ_ENUM(SEQ)>)
 
@@ -42,3 +43,14 @@ View_BOOST_PP_SEQ_REST_N(ARGS)
 BOOST_PP_REPEAT_FROM_TO(5, 10, DECL, int x)
 // => produce: int x5 = 5; int x6 = 6; int x7 = 7; int x8 = 8; int x9 = 9;
 //
+
+struct UDMarkerType { };
+
+BOOST_TTI_MEMBER_TYPE(ANamedType)
+
+typedef member_type_ANamedType<EnclosingType> IMType;
+
+typedef member_type_ANamedType<EnclosingType,UDMarkerType> IMTypeWithMarkerType;
+
+boost::tti::valid_member_metafunction<IMType>::value
+boost::tti::valid_member_metafunction<IMTypeWithMarkerType>::value

@@ -32,4 +32,4 @@ message(status "** Boost Libraries: ${Boost_LIBRARIES}")
 
 #add_definitions(-Os -Wall -pedantic -pthread -c -E -P)
 
-add_library(pack_classes src/pack_classes.cpp)
+add_executable(pack_classes src/pack_classes.cpp)
