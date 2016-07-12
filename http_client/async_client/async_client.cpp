@@ -56,9 +56,9 @@ public:
     // request_stream << "Accept: */*\r\n";
     // request_stream << "Connection: close\r\n\r\n";
     //
-    // BUILD_REQUEST_GET(request_stream, server, path);
-    const std::string xwwwformcoded = "laser=on&rpm=333";
-    BUILD_REQUEST_POST(request_stream_, server, path, xwwwformcoded);
+    BUILD_REQUEST_GET(request_stream_, server, path);
+    // const std::string xwwwformcoded = "laser=on&rpm=333";
+    // BUILD_REQUEST_POST(request_stream_, server, path, xwwwformcoded);
 
     // Start an asynchronous resolve to translate the server and service names
     // into a list of endpoints.
