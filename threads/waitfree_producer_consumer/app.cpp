@@ -55,7 +55,7 @@ struct Capture {
   void take() {
     // TEMPOrisaton pour le transfert USB3->RAM
     boost::this_thread::sleep(
-        boost::posix_time::milliseconds(time_transfert_usb3));
+          boost::posix_time::milliseconds(time_transfert_usb3));
     // on assigne un ID à l'image (pour la répérer dans les logs)
     img.set_id(std::rand());
   }
@@ -85,8 +85,8 @@ struct WrapperLadyBug {
     // On lance le transfert USB3 -> RAM
     m_capture.take();
     if (_debug) {
-      INFO << "->[PRODUCER] Transfert USB->RAM Image n° " << m_capture;
-    }
+        INFO << "->[PRODUCER] Transfert USB->RAM Image n° " << m_capture;
+      }
     // On renvoie la capture
     return m_capture;
   }
@@ -102,18 +102,18 @@ typedef boost::shared_ptr<WrapperLadyBug> WrapperLadyBugPtr;
 // QUEUE thread-safe pour le stockage des captures
 const uint capacity_queue = 5;
 boost::lockfree::spsc_queue<Capture, boost::lockfree::capacity<capacity_queue>>
-    spsc_queue_captures;
+spsc_queue_captures;
 
 // PRODUCER
 void runLadyBug(WrapperLadyBugPtr sptr_wLB) {
   // Production infinie ...
   while (true) {
-    WrapperLadyBug &ref_wLB = *sptr_wLB;
-    const Capture &capture = ref_wLB.read();
-    while (!spsc_queue_captures.push(capture))
-      ;
-    INFO << "\t->[PRODUCER] Transfert (USB->)RAM->RAM' Image n° " << capture;
-  }
+      WrapperLadyBug &ref_wLB = *sptr_wLB;
+      const Capture &capture = ref_wLB.read();
+      while (!spsc_queue_captures.push(capture))
+        ;
+      INFO << "\t->[PRODUCER] Transfert (USB->)RAM->RAM' Image n° " << capture;
+    }
 }
 
 boost::atomic<bool> done(false);
@@ -124,7 +124,7 @@ boost::atomic<bool> done(false);
 bool write_to_disk(const Image &_img) {
   // temps pour écrire
   boost::this_thread::sleep(
-      boost::posix_time::milliseconds(time_transfert_disk));
+        boost::posix_time::milliseconds(time_transfert_disk));
   INFO << "<-[CONSUMER] Transfert RAM->DISK Image n° " << _img;
   return true;
 }
@@ -138,12 +138,12 @@ void runwriteLadyBug(WrapperLadyBugPtr sptr_wLB) {
   Capture capture;
 
   while (true) {
-    while (!done) {
+      while (!done) {
+          while (spsc_queue_captures.pop(capture)) write_to_disk(capture);
+        }
+
       while (spsc_queue_captures.pop(capture)) write_to_disk(capture);
     }
-
-    while (spsc_queue_captures.pop(capture)) write_to_disk(capture);
-  }
 }
 
 void termination_handler(int signum) { exit(1); }
@@ -189,5 +189,5 @@ int main(int argc, char *argv[]) {
 
   // boucle infinie d'exécution
   while (true) {
-  }
+    }
 }
